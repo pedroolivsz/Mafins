@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from chatbot.core import responder
+from chatbot.core import responder, registrar_historico
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -16,6 +16,7 @@ class MafinsChat(ctk.CTk):
         
         self.entry = ctk.CTkEntry(self, width = 400, placeholder_text = "Digite algo...")
         self.entry.pack(side = "left", padx = (10, 0), pady = (0, 10))
+        self.entry.bind("<Return>", lambda event: self.enviar_mensagem())
         
         self.send_button = ctk.CTkButton(self, text = "Enviar", command = self.enviar_mensagem)
         self.send_button.pack(side = "right", padx = (0, 10), pady = (10, 0))
@@ -25,8 +26,12 @@ class MafinsChat(ctk.CTk):
         if user_text:
             self.entry.delete(0, "end")
             self.exibir_mensagem("Você", user_text)
+            
             resposta = responder(user_text)
             self.exibir_mensagem("Mafins", resposta)
+            
+            registrar_historico("Você", user_text)
+            registrar_historico("Mafins", resposta)
             
     def exibir_mensagem(self, autor, mensagem):
         self.chat_display.configure(state = "normal")

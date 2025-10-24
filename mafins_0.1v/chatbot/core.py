@@ -1,9 +1,21 @@
 import json
 from pathlib import Path
+from datetime import datetime
 
-respostas_path = Path(__file__).parent / "responses.json"
+BASE_DIR = Path(__file__).parent
+RESPOSTAS_PATH = BASE_DIR / "responses.json"
+MEMORY_PATH = BASE_DIR / "memory.json"
 
-with open(respostas_path, "r", encoding = "utf-8") as arquivo:
+if not MEMORY_PATH.exists():
+    with open(MEMORY_PATH, "w", encoding = "utf-8") as arquivo:
+        json.dump([], arquivo, ensure_ascii = False, indent = 4)
+
+if not MEMORY_PATH.exists():
+    with open(MEMORY_PATH, "w", encoding = "utf-8") as arquivo:
+        json.dump([], arquivo, ensure_ascii = False, indent = 4)
+    
+    
+with open(RESPOSTAS_PATH, "r", encoding = "utf-8") as arquivo:
     RESPOSTAS = json.load(arquivo)
     
 def responder(texto_usuario : str) -> str:
@@ -15,3 +27,15 @@ def responder(texto_usuario : str) -> str:
     
     return "Desculpa, mestre. Não aprendi a responder essa pergunta ainda"
 
+def registrar_historico(autor: str, mensagem: str):
+    with open(MEMORY_PATH, "r", encoding = "utf-8") as arquivo:
+        historico = json.load(arquivo)
+        
+    historico.append({
+        "Autor": autor,
+        "Mensagem": mensagem,
+        "Data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+    
+    with open(MEMORY_PATH, "w", encoding = "utf-8") as arquivo:
+        json.dump(historico, arquivo, ensure_ascii = False, indent = 4)
