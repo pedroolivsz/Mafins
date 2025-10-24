@@ -10,16 +10,27 @@ class MafinsChat(ctk.CTk):
         super().__init__()
         self.title("Mafins - Chatbot")
         self.geometry("500x600")
+        self.resizable(False, False)
         
-        self.chat_display = ctk.CTkTextbox(self, width = 480, height = 450, state = "disabled")
-        self.chat_display.pack(padx = 10, pady = 10)
+        chat_frame = ctk.CTkFrame(self)
+        chat_frame.pack(padx = 10, pady = 10, fill = "both", expand = True)
+        
+        self.chat_display = ctk.CTkTextbox(chat_frame, width = 480, height = 450, state = "disabled", wrap = "word")
+        self.chat_display.pack(side = "left", fill = "both", expand = True)
+        
+        self.scrollbar = ctk.CTkScrollbar(chat_frame, orientation = "vertical", command = self.chat_display.yview)
+        self.scrollbar.pack(side = "right", fill = "y")
+        self.chat_display.configure(yscrollcommand = self.scrollbar.set)
+        
+        frame_input = ctk.CTkFrame(self)
+        frame_input.pack(fill = "x", padx = 10, pady = 10)
         
         self.entry = ctk.CTkEntry(self, width = 400, placeholder_text = "Digite algo...")
         self.entry.pack(side = "left", padx = (10, 0), pady = (0, 10))
         self.entry.bind("<Return>", lambda event: self.enviar_mensagem())
         
-        self.send_button = ctk.CTkButton(self, text = "Enviar", command = self.enviar_mensagem)
-        self.send_button.pack(side = "right", padx = (0, 10), pady = (10, 0))
+        self.send_button = ctk.CTkButton(frame_input, text = "Enviar", command = self.enviar_mensagem)
+        self.send_button.pack(side = "right")
         
     def enviar_mensagem(self):
         user_text = self.entry.get().strip()
