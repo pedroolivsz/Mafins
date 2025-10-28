@@ -8,5 +8,55 @@
         "Autor": "Mafins",
         "Mensagem": "Olá, mestre. Inicializado sistema o sistema Mafins, seja bem-vindo de volta. Como posso ajuda-lo hoje?",
         "Data": "2025-10-28 10:22:44"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "oi",
+        "Data": "2025-10-28 11:21:30"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Olá, mestre. Inicializado sistema o sistema Mafins, seja bem-vindo de volta. Como posso ajuda-lo hoje?",
+        "Data": "2025-10-28 11:21:30"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "tudo bem?",
+        "Data": "2025-10-28 11:21:40"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Desculpa, mestre. Não aprendi a responder essa pergunta ainda. Quer me ensinar",
+        "Data": "2025-10-28 11:21:40"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "Claro, e com você, mestre?",
+        "Data": "2025-10-28 11:22:09"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Aprendi, mestre! Quando vocẽ perguntar 'tudo bem?', responderei 'Claro, e com você, mestre?'",
+        "Data": "2025-10-28 11:22:09"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "tudo bem?",
+        "Data": "2025-10-28 11:22:20"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Claro, e com você, mestre?",
+        "Data": "2025-10-28 11:22:20"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "tchau",
+        "Data": "2025-10-28 11:22:28"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Até mais, mestre",
+        "Data": "2025-10-28 11:22:28"
     }
 ]

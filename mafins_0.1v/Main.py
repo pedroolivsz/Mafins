@@ -56,7 +56,7 @@ class MafinsChat(ctk.CTk):
         
         user_text = self.entry.get().strip()
         
-        if user_text:
+        if not user_text:
             return
         
         self.entry.delete(0, "end")
