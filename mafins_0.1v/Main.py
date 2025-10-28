@@ -2,6 +2,7 @@ import customtkinter as ctk
 from chatbot.core import responder, registrar_historico, aprender
 from PIL import Image
 from pathlib import Path
+from collections import deque
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -15,6 +16,7 @@ class MafinsChat(ctk.CTk):
         self.resizable(True, True)
         self.modo_aprendizado = False
         self.ultima_pergunta = ""
+        self.contexto = deque(maxlen = 5)
         
         self.grid_rowconfigure(0, weight = 1)
         self.grid_rowconfigure(1, weight = 0)
@@ -63,6 +65,8 @@ class MafinsChat(ctk.CTk):
         self.exibir_mensagem("Você", user_text)
         registrar_historico("Você", user_text)
         
+        self.contexto.append({"Autor": "Você", "mensagem": user_text})
+        
         if self.modo_aprendizado:
             resposta_correta = user_text
             confirmacao = aprender(self.ultima_pergunta, resposta_correta)
@@ -75,6 +79,8 @@ class MafinsChat(ctk.CTk):
         resposta = responder(user_text)
         self.exibir_mensagem("Mafins", resposta)
         registrar_historico("Mafins", resposta)
+        
+        self.contexto.append({"Autor": "Mafins", "mensagem": resposta})
         
         if "quer me ensinar" in resposta.lower():
             self.modo_aprendizado = True
