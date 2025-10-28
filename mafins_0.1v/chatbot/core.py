@@ -71,19 +71,41 @@ def registrar_historico(autor: str, mensagem: str):
         
 MODEL_NAME = "EleutherAI/gpt-neo-125M"
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.pad_token_id = tokenizer.eos_token_id
+
 model = GPTNeoForCausalLM.from_pretrained(MODEL_NAME)
+
+if getattr(model.config, "pad_token_id", None) is None:
+    model.config.pad_token_id = model.config.eos_token_id
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 def gerar_resposta_ia(texto_usuario: str, max_tokens = 150):
-    input_ids = tokenizer(texto_usuario, return_tensors = "pt").input_ids.to(device)
+    
+    enc = tokenizer(
+        texto_usuario,
+        return_tensors = "pt",
+        padding = True,
+        truncation = True,
+        max_length = 512
+    )
+    
+    input_ids = enc["input_ids"].to(device)
+    attention_mask = enc["attention_mask"].to(device)
     with torch.no_grad():
         output = model.generate(
             input_ids,
+            attention_mask = attention_mask,
             max_new_tokens = max_tokens,
+            do_sample = True,
             temperature = 0.7,
             top_p = 0.9,
-            do_sample = True
+            pad_token_id = tokenizer.pad_token_id
+            
         )
     resposta = tokenizer.decode(output[0], skip_special_tokens = True)
     return resposta
