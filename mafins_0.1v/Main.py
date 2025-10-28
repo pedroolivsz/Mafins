@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from chatbot.core import responder, registrar_historico
+from chatbot.core import responder, registrar_historico, aprender
 from PIL import Image
 from pathlib import Path
 
@@ -13,6 +13,8 @@ class MafinsChat(ctk.CTk):
         self.title("Mafins - Chatbot")
         self.geometry("500x600")
         self.resizable(True, True)
+        self.modo_aprendizado = False
+        self.ultima_pergunta = ""
         
         self.grid_rowconfigure(0, weight = 1)
         self.grid_rowconfigure(1, weight = 0)
@@ -51,15 +53,33 @@ class MafinsChat(ctk.CTk):
         self.bind("<Configure>", self._on_resize)
         
     def enviar_mensagem(self):
+        
         user_text = self.entry.get().strip()
+        
         if user_text:
-            self.entry.delete(0, "end")
-            self.exibir_mensagem("Você", user_text)
-            registrar_historico("Você", user_text)
+            return
+        
+        self.entry.delete(0, "end")
+        self.exibir_mensagem("Você", user_text)
+        registrar_historico("Você", user_text)
+        
+        if self.modo_aprendizado:
+            resposta_correta = user_text
+            confirmacao = aprender(self.ultima_pergunta, resposta_correta)
+            self.exibir_mensagem("Mafins", confirmacao)
+            registrar_historico("Mafins", confirmacao)
+            self.modo_aprendizado = False
+            self.ultima_pergunta = ""
+            return
             
-            resposta = responder(user_text)
-            self.exibir_mensagem("Mafins", resposta)
-            registrar_historico("Mafins", resposta)
+        resposta = responder(user_text)
+        self.exibir_mensagem("Mafins", resposta)
+        registrar_historico("Mafins", resposta)
+        
+        if "quer me ensinar" in resposta.lower():
+            self.modo_aprendizado = True
+            self.ultima_pergunta = user_text
+            self.exibir_mensagem("Mafins", "Digite agora o que posso responder da proxima vez.")
             
     def exibir_mensagem(self, autor, mensagem):
         msg_frame = ctk.CTkFrame(self.chat_frame, corner_radius = 12, fg_color = "transparent")
@@ -135,4 +155,3 @@ class MafinsChat(ctk.CTk):
 if __name__ == "__main__":
     app = MafinsChat()
     app.mainloop()
-

@@ -11,13 +11,17 @@ if not MEMORY_PATH.exists():
     with open(MEMORY_PATH, "w", encoding = "utf-8") as arquivo:
         json.dump([], arquivo, ensure_ascii = False, indent = 4)
 
-if not MEMORY_PATH.exists():
-    with open(MEMORY_PATH, "w", encoding = "utf-8") as arquivo:
+if not RESPOSTAS_PATH.exists():
+    with open(RESPOSTAS_PATH, "w", encoding = "utf-8") as arquivo:
         json.dump([], arquivo, ensure_ascii = False, indent = 4)
     
     
 with open(RESPOSTAS_PATH, "r", encoding = "utf-8") as arquivo:
     RESPOSTAS = json.load(arquivo)
+    
+def salvar_respostas():
+    with open(RESPOSTAS_PATH, "w", encoding = "utf-8") as file:
+        json.dump(RESPOSTAS, file, ensure_ascii = False, indent = 4)
     
 def responder(texto_usuario : str) -> str:
     texto_usuario = texto_usuario.lower()
@@ -26,7 +30,13 @@ def responder(texto_usuario : str) -> str:
         if chave in texto_usuario:
             return resposta
     
-    return "Desculpa, mestre. Não aprendi a responder essa pergunta ainda"
+    return "Desculpa, mestre. Não aprendi a responder essa pergunta ainda. Quer me ensinar"
+
+
+def aprender(pergunta: str, resposta: str):
+    RESPOSTAS[pergunta.lower()] = resposta
+    salvar_respostas()
+    return f"Aprendi, mestre! Quando vocẽ perguntar '{pergunta}', responderei '{resposta}'"
 
 def registrar_historico(autor: str, mensagem: str):
     
