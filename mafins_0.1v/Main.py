@@ -46,6 +46,10 @@ class MafinsChat(ctk.CTk):
         self.send_button = ctk.CTkButton(frame_input, text = "Enviar", command = self.enviar_mensagem)
         self.send_button.grid(row = 0, column = 1, pady = (5, 5))
         
+        self.message_labels = []
+        
+        self.bind("<Configure>", self._on_resize)
+        
     def enviar_mensagem(self):
         user_text = self.entry.get().strip()
         if user_text:
@@ -74,10 +78,11 @@ class MafinsChat(ctk.CTk):
         container.pack(fill = "x", pady = 4)
         
         wrap_len = max(200, self.winfo_width()-200)
+        font_size = self._get_dynamic_font_size()
         
         if autor == "Mafins":
             ctk.CTkLabel(container, image = avatar, text = "").pack(side = "left", padx = 6)
-            ctk.CTkLabel(
+            bubble = ctk.CTkLabel(
                 container,
                 text = mensagem,
                 justify = "left",
@@ -85,11 +90,13 @@ class MafinsChat(ctk.CTk):
                 corner_radius = 10,
                 fg_color = bubble_color,
                 text_color = "white",
+                font = ("Arial", font_size),
                 padx = 10,
                 pady = 10
-            ).pack(side = "left", padx = 6)
+            )
+            bubble.pack(side = "left", padx = 6)
         else:
-            ctk.CTkLabel(
+            bubble = ctk.CTkLabel(
                 container,
                 text = mensagem,
                 justify = "right",
@@ -97,13 +104,33 @@ class MafinsChat(ctk.CTk):
                 corner_radius = 10,
                 fg_color = bubble_color,
                 text_color = "white",
+                font = ("Arial", font_size),
                 padx = 10,
                 pady = 6
-            ).pack(side = "right", padx = 5)
+            )
+            bubble.pack(side = "right", padx = 5)
             ctk.CTkLabel(container, image = avatar, text = "").pack(side = "right", padx = 6)
         
         msg_frame.pack(fill = "x", anchor = anchor, padx = 5)
         self.chat_frame._parent_canvas.yview_moveto(1.0)
+        
+        self.message_labels.append(bubble)
+        
+    def _on_resize(self, event):
+        new_wrap = max(200, self.winfo_width()-220)
+        font_size = self._get_dynamic_font_size()
+            
+        for bubble in self.message_labels:
+            bubble.configure(wraplength = new_wrap, font = ("Arial", font_size))
+                
+    def _get_dynamic_font_size(self):
+        width = self.winfo_width()
+        if width < 450:
+            return 11
+        elif width < 700:
+            return 13
+            
+        return 15
 
 if __name__ == "__main__":
     app = MafinsChat()
