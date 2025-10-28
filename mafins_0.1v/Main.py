@@ -12,35 +12,39 @@ class MafinsChat(ctk.CTk):
         super().__init__()
         self.title("Mafins - Chatbot")
         self.geometry("500x600")
-        self.resizable(False, False)
+        self.resizable(True, True)
+        
+        self.grid_rowconfigure(0, weight = 1)
+        self.grid_rowconfigure(1, weight = 0)
+        self.grid_columnconfigure(0, weight = 1)
         
         BASE_DIR = Path(__file__).parent
         ASSETS_DIR = BASE_DIR / "assets"
         
         self.avatar_user = ctk.CTkImage(
-            light_image = Image.open(ASSETS_DIR / "batman.png"),
             dark_image = Image.open(ASSETS_DIR / "batman.png"),
             size = (40, 40)
         )
         
         self.avatar_mafins = ctk.CTkImage(
-            light_image = Image.open(ASSETS_DIR / "ironman.png"),
             dark_image = Image.open(ASSETS_DIR / "ironman.png"),
             size = (40, 40)
         )
         
-        self.chat_frame = ctk.CTkScrollableFrame(self, width = 480, height = 450)
-        self.chat_frame.pack(padx = 10, pady = 10, fill = "both", expand = True)
+        self.chat_frame = ctk.CTkScrollableFrame(self)
+        self.chat_frame.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = "nsew")
         
         frame_input = ctk.CTkFrame(self)
-        frame_input.pack(fill = "x", padx = 10, pady = 10)
+        frame_input.grid(row = 1, column = 0, padx = 10, pady = 10, sticky = "ew")
+        frame_input.columnconfigure(0, weight = 1)
+        frame_input.columnconfigure(1, weight = 0)
         
-        self.entry = ctk.CTkEntry(self, width = 400, placeholder_text = "Digite algo...")
-        self.entry.pack(side = "left", padx = (10, 0), pady = (0, 10))
+        self.entry = ctk.CTkEntry(frame_input, placeholder_text = "Digite algo...")
+        self.entry.grid(row = 0, column = 0, padx = (0, 8), pady = (5, 5), sticky = "ew")
         self.entry.bind("<Return>", lambda event: self.enviar_mensagem())
         
         self.send_button = ctk.CTkButton(frame_input, text = "Enviar", command = self.enviar_mensagem)
-        self.send_button.pack(side = "right")
+        self.send_button.grid(row = 0, column = 1, pady = (5, 5))
         
     def enviar_mensagem(self):
         user_text = self.entry.get().strip()
@@ -69,13 +73,15 @@ class MafinsChat(ctk.CTk):
         container = ctk.CTkFrame(msg_frame, fg_color = "transparent")
         container.pack(fill = "x", pady = 4)
         
+        wrap_len = max(200, self.winfo_width()-200)
+        
         if autor == "Mafins":
             ctk.CTkLabel(container, image = avatar, text = "").pack(side = "left", padx = 6)
             ctk.CTkLabel(
                 container,
                 text = mensagem,
                 justify = "left",
-                wraplength = 300,
+                wraplength = wrap_len,
                 corner_radius = 10,
                 fg_color = bubble_color,
                 text_color = "white",
@@ -87,7 +93,7 @@ class MafinsChat(ctk.CTk):
                 container,
                 text = mensagem,
                 justify = "right",
-                wraplength = 300,
+                wraplength = wrap_len,
                 corner_radius = 10,
                 fg_color = bubble_color,
                 text_color = "white",

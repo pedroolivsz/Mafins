@@ -18,5 +18,65 @@
         "Autor": "Mafins",
         "Mensagem": "Olá, mestre. Inicializado sistema o sistema Mafins, seja bem-vindo de volta. Como posso ajuda-lo hoje?",
         "Data": "2025-10-27 20:08:55"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "oi",
+        "Data": "2025-10-27 21:07:40"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Olá, mestre. Inicializado sistema o sistema Mafins, seja bem-vindo de volta. Como posso ajuda-lo hoje?",
+        "Data": "2025-10-27 21:07:40"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "tudo bem, Mafins?",
+        "Data": "2025-10-27 21:08:19"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Desculpa, mestre. Não aprendi a responder essa pergunta ainda",
+        "Data": "2025-10-27 21:08:19"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "estou bem",
+        "Data": "2025-10-27 21:08:43"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Que bom, mestre. Como posso ajuda-lo hoje?",
+        "Data": "2025-10-27 21:08:43"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "tudo bem, Mafins?",
+        "Data": "2025-10-27 21:08:56"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Desculpa, mestre. Não aprendi a responder essa pergunta ainda",
+        "Data": "2025-10-27 21:08:56"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "quem é você?",
+        "Data": "2025-10-27 21:09:17"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Sou o Mafins, um sistema de chat em processo desenvolvimento por você, Pedro",
+        "Data": "2025-10-27 21:09:17"
+    },
+    {
+        "Autor": "Você",
+        "Mensagem": "tchau",
+        "Data": "2025-10-27 21:09:51"
+    },
+    {
+        "Autor": "Mafins",
+        "Mensagem": "Até mais, mestre",
+        "Data": "2025-10-27 21:09:51"
     }
 ]
