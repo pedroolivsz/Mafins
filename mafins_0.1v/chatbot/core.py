@@ -32,7 +32,15 @@ def responder(texto_usuario : str, contexto = None) -> str:
         if chave in texto_usuario:
             return resposta
     
-    resposta_ia = gerar_resposta_ia(texto_usuario)
+    with open(MEMORY_PATH, "r", encoding = "utf-8") as file:
+        historico = json.load(file)
+    
+    ultimas = historico[-5:] if len(historico) >= 5 else historico
+    
+    contexto_texto = "\n".join([f"{item['Autor']}: {item['Mensagem']}" for item in ultimas])
+    prompt = f"{contexto_texto}\nUsuário: {texto_usuario}\nMafins:"
+    
+    resposta_ia = gerar_resposta_ia(prompt)
     registrar_historico("Mafins", resposta_ia)
     return resposta_ia
 
@@ -108,4 +116,7 @@ def gerar_resposta_ia(texto_usuario: str, max_tokens = 150):
             
         )
     resposta = tokenizer.decode(output[0], skip_special_tokens = True)
+    
+    if resposta.startswith(texto_usuario):
+        resposta = resposta[len(texto_usuario):].strip()
     return resposta
