@@ -18,6 +18,7 @@ def criar_balao_de_mensagem(
         coluna_bubble = 1
         anchor = "e"
         justify = "right"
+        bubble_padx = (80, 0)
         
     else:
         avatar = avatar_mafins
@@ -26,6 +27,7 @@ def criar_balao_de_mensagem(
         coluna_bubble = 1
         anchor = "w"
         justify = "left"
+        bubble_padx = (0, 80)
     
     container = ctk.CTkFrame(mensagem_frame, fg_color = "transparent")
     container.grid(sticky =  anchor, padx = 10, pady = 4)
@@ -47,7 +49,7 @@ def criar_balao_de_mensagem(
         padx = 10,
         pady = 6
     )
-    bubble.grid(row = 0, column = coluna_bubble, sticky = anchor)
+    bubble.grid(row = 0, column = coluna_bubble, sticky = anchor, padx = bubble_padx)
     
     if autor != "Mafins":
         ctk.CTkLabel(container, image = avatar, text = "").grid(row = 0, column = coluna_avatar, padx = 6, sticky = "e")
