@@ -60,4 +60,4 @@ def criar_balao_de_mensagem(
         
     mensagem_frame.grid(sticky = anchor, padx = 20, pady = 4)
     
-    return mensagem_frame
+    return bubble
