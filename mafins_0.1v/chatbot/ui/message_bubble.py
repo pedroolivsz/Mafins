@@ -18,6 +18,8 @@ def criar_balao_de_mensagem(
         text_justify = "right"
         pack_side = "right"
         sticky = "e"
+        avatar_col = 1
+        bubble_col = 0
         
     else:
         avatar = avatar_mafins
@@ -25,9 +27,11 @@ def criar_balao_de_mensagem(
         text_justify = "left"
         pack_side = "left"
         sticky = "w"
+        avatar_col = 0
+        bubble_col = 1
     
     container = ctk.CTkFrame(mensagem_frame, fg_color = "transparent")
-    container.pack(fill = "x", pady = 4)
+    container.grid(row = 0, column = 0, sticky = sticky, padx = 10, pady = 4)
         
     wrap_len = max(200, largura_de_janela-200)
 
@@ -46,13 +50,14 @@ def criar_balao_de_mensagem(
         padx = 10,
         pady = 6
     )
-    bubble.pack(side = "right", padx = 5)
+    bubble.grid(row = 0, column = bubble_col, sticky = sticky, padx = 6)
+    
     if autor != "Mafins":
         ctk.CTkLabel(container, image = avatar, text = "").pack(side = "right", padx = 6)
     
     container.grid(row = 0, column = 0, sticky = sticky, padx = 10, pady = 4)
         
-    mensagem_frame.pack(fill = "x", expand = True)
+    mensagem_frame.grid(sticky = sticky, pady = 4)
     mensagem_frame.bubble = bubble
     
     return mensagem_frame
