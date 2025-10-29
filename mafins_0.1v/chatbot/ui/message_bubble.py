@@ -14,27 +14,31 @@ def criar_balao_de_mensagem(
     if autor == "Você":
         avatar = avatar_user
         bubble_color = "#3BA55D"
+        coluna_avatar = 2
+        coluna_bubble = 1
         anchor = "e"
         justify = "right"
         
     else:
         avatar = avatar_mafins
         bubble_color = "#0078D7"
+        coluna_avatar = 0
+        coluna_bubble = 1
         anchor = "w"
         justify = "left"
     
     container = ctk.CTkFrame(mensagem_frame, fg_color = "transparent")
-    container.pack(fill = "x", pady = 4)
+    container.grid(sticky =  anchor, padx = 10, pady = 4)
         
     wrap_len = max(200, largura_de_janela-200)
 
     if autor == "Mafins":
-        ctk.CTkLabel(container, image = avatar, text = "").pack(side = "left", padx = 6)
+        ctk.CTkLabel(container, image = avatar, text = "").grid(row = 0, column = coluna_avatar, padx = 6, sticky = anchor)
         
     bubble = ctk.CTkLabel(
         container,
         text = mensagem,
-        justify = "right",
+        justify = justify,
         wraplength = wrap_len,
         corner_radius = 10,
         fg_color = bubble_color,
@@ -43,10 +47,15 @@ def criar_balao_de_mensagem(
         padx = 10,
         pady = 6
     )
-    bubble.pack(side = "right", padx = 5)
+    bubble.grid(row = 0, column = coluna_bubble, sticky = anchor)
+    
     if autor != "Mafins":
-        ctk.CTkLabel(container, image = avatar, text = "").pack(side = "right", padx = 6)
+        ctk.CTkLabel(container, image = avatar, text = "").grid(row = 0, column = coluna_avatar, padx = 6, sticky = anchor)
+    
+    container.grid_columnconfigure(0, weight = 1)
+    container.grid_columnconfigure(1, weight = 0)
+    container.grid_columnconfigure(2, weight = 1)
         
-    mensagem_frame.pack(fill = "x", anchor = anchor, padx = 5)
+    mensagem_frame.grid(sticky = anchor, pady = 4, padx = 10)
     
     return mensagem_frame
