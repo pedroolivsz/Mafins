@@ -54,7 +54,7 @@ def criar_balao_de_mensagem(
     
     container.grid(row = 0, column = 0, sticky = sticky, padx = 10, pady = 4)
         
-    mensagem_frame.pack(fill = "x", exapand = True)
+    mensagem_frame.pack(fill = "x", expand = True)
     
     return mensagem_frame
 
