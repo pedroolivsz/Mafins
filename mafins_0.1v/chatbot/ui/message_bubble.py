@@ -33,7 +33,7 @@ def criar_balao_de_mensagem(
     wrap_len = max(200, largura_de_janela-200)
 
     if autor == "Mafins":
-        ctk.CTkLabel(container, image = avatar, text = "").grid(row = 0, column = coluna_avatar, padx = 6, sticky = anchor)
+        ctk.CTkLabel(container, image = avatar, text = "").grid(row = 0, column = coluna_avatar, padx = 6, sticky = "w")
         
     bubble = ctk.CTkLabel(
         container,
@@ -50,12 +50,12 @@ def criar_balao_de_mensagem(
     bubble.grid(row = 0, column = coluna_bubble, sticky = anchor)
     
     if autor != "Mafins":
-        ctk.CTkLabel(container, image = avatar, text = "").grid(row = 0, column = coluna_avatar, padx = 6, sticky = anchor)
+        ctk.CTkLabel(container, image = avatar, text = "").grid(row = 0, column = coluna_avatar, padx = 6, sticky = "e")
     
     container.grid_columnconfigure(0, weight = 1)
     container.grid_columnconfigure(1, weight = 0)
     container.grid_columnconfigure(2, weight = 1)
         
-    mensagem_frame.grid(sticky = anchor, pady = 4, padx = 10)
+    mensagem_frame.grid(sticky = anchor, padx = 20, pady = 4)
     
     return mensagem_frame
